@@ -8,8 +8,17 @@ if (!supabaseUrl || !supabaseAnon) {
   throw new Error('❌ Variables de entorno de Supabase no configuradas');
 }
 
-export const supabase = createClient(supabaseUrl, supabaseAnon);
+// Cliente público
+export const supabase = createClient(supabaseUrl, supabaseAnon, {
+  auth: {
+    persistSession: false // Evita errores de almacenamiento en servidor
+  }
+});
 
+// Cliente admin
 export const supabaseAdmin = createClient(supabaseUrl, supabaseSvc, {
-  auth: { autoRefreshToken: false, persistSession: false }
+  auth: {
+    autoRefreshToken: false,
+    persistSession: false
+  }
 });
